@@ -35,9 +35,9 @@ def drawGraphic(data, kind1, colX, colY, title, xlabel, ylabel):
 def drawLineGraphic(data, colX, colY, title, xlabel, ylabel):
     return drawGraphic(data, 'bar', colX, colY, title, xlabel, ylabel)
 
-spark = SparkSession.builder.getOrCreate() 
+spark = SparkSession.builder.getOrCreate()
 
-data = spark.read.csv('C:/Users/andre/OneDrive/Desktop/spliter/price_paid_records-000.csv', header=True, inferSchema=True) 
+data = spark.read.csv('price_paid_records-000.csv', header=True, inferSchema=True).persist()
 data.show() 
 features = ['Price', 'Date of Transfer', 'Property Type', 'Old/New', 'Town/City', 'District', 'County']
 data = data.select(features)
@@ -61,7 +61,6 @@ data = town_indexer.transform(data)
 data = district_indexer.transform(data)
 data = county_indexer.transform(data)
     
-
 
 # process data
                                         # convert datetime to integer
@@ -89,7 +88,7 @@ result = model.transform(test)
 result.show()
 
  # save results
-filename = 'C:/Users/andre/OneDrive/Desktop/modelofds'
+filename = 'modelofds'
 model.save(filename)
 #result.repartition(1).write.format('com.databricks.spark.csv').save('C:/Users/andre/OneDrive/Desktop/result.csv',header = 'true')
 #avg_price_county = (data

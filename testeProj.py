@@ -1,5 +1,5 @@
 
-
+import os
 from pyspark.sql import SparkSession
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.linalg import Vectors
@@ -42,4 +42,5 @@ lr_model=lr.fit(train_data)
 
 # save results
 filename = 'Machine_Learning'
-lr_model.save(filename)
+lr_model.save(os.path.join('Bucket'))
+#lr_model.save(filename)
