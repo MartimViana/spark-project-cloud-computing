@@ -32,7 +32,7 @@ data = town_indexer.transform(data)
 data = district_indexer.transform(data)
 data = county_indexer.transform(data)
 data.show
-assembler=VectorAssembler(inputCols=['Price', 'Date_of_TransferIndexed', 'Property_typeIndexed', 'Old_NewIndexed', 'TownIndexed', 'DistrictIndexed', 'CountyIndexed'],outputCol='features')
+assembler=VectorAssembler(inputCols=['Date_of_TransferIndexed', 'CountyIndexed'],outputCol='features')
 output=assembler.transform(data)
 final_data=output.select('features','Price')
 train_data,test_data=final_data.randomSplit([0.7,0.3])
@@ -43,4 +43,3 @@ lr_model=lr.fit(train_data)
 # save results
 filename = 'Machine_Learning'
 lr_model.save(os.path.join('Bucket'))
-#lr_model.save(filename)
